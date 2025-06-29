@@ -1,0 +1,141 @@
+PROJECT RULES AND GUIDELINES
+Project will be a multilingual portfolio and CV builder. It must allow users to input personal and professional information in both Turkish and English, and dynamically generate a personal portfolio website and downloadable PDF CV. All business logic will be implemented via Service classes. Controllers must remain clean and only delegate to services. All request validation must be handled via custom Form Request classes (RC structure). No data section should appear in the UI or PDF unless it contains at least one valid, non-empty entry. Each multilingual content must be stored in both tr/en versions.
+
+Phase 1: Project Initialization
+
+- Install Laravel and Breeze (or Jetstream if needed)
+- Setup localization with EN and TR
+- Create language switcher middleware
+- Create directory structure: App/Services, App/Http/Requests, App/ViewModels (optional)
+- Add helper method for multilingual fallback
+- Setup fallback locale handling in Laravel config
+
+Phase 2: Database Design
+
+Models:
+
+- User (name, surname, email, password)
+- Profile (title, bio, phone, address, image, etc.)
+- Experience (job_title, company_name, start_date, end_date, description_tr, description_en)
+- Education (school_name, department, start_date, end_date, description_tr, description_en)
+- Project (title, image, url, description_tr, description_en, is_featured)
+- Skill (name_tr, name_en, level, category)
+- Language (name_tr, name_en, level)
+- Certificate (name, issuer, date, description_tr, description_en)
+- Award (name, organization, date, description_tr, description_en)
+- SocialLink (type, url)
+- Reference (name, company, contact, note_tr, note_en)
+- Hobby (name_tr, name_en)
+- Volunteering (organization, role, date, description_tr, description_en)
+- Publication (title, url, summary_tr, summary_en)
+
+Tasks:
+
+- Create migrations for all models
+- Add necessary and possible relationships
+- Add factories and seeders
+
+Phase 3: CRUD Operations
+
+Each module will be built with:
+
+- Dedicated Service classes to handle business logic
+- Custom Form Request validation
+- Controllers calling only service methods
+- Full CRUD for each model:
+  - Profile
+  - Experiences
+  - Educations
+  - Projects (including featured toggle)
+  - Skills
+  - Languages
+  - Certificates
+  - Awards
+  - References
+  - Hobbies
+  - Volunteering
+  - Publications
+  - SocialLinks
+
+Phase 3.5 : Auth and Access Control
+- Users can only CRUD their own data unless they are an admin
+- Admin can CRUD everything
+- Use Laratrust and Policies to implement the above
+
+Phase 3.6 : Crud Operations Tests
+- Write unit tests for all CRUD operations
+- Test user permissions and roles
+
+Phase 4: Portfolio Website Rendering
+
+- Create public route for portfolio (e.g. /portfolio/{username})
+- Show sections only if they contain data
+- Display max 5 featured projects
+- Language switcher support on frontend
+- Responsive layout using TailwindCSS or Bootstrap
+- Show/hide section titles dynamically
+- If both tr and en data are empty for a field, skip field
+- Use fallback language content if available
+
+Phase 5: PDF CV Generation
+
+- Use dompdf or browsershot for PDF export
+- Separate templates for TR and EN CVs
+- First page: personal details, experiences, education, skills
+- Second page: featured projects with short descriptions
+- Skip sections that are completely empty
+- Add layout handling for page breaks
+- Ensure layout is consistent between languages
+
+Phase 6: Localization and Fallback Logic
+
+- Implement helper like getLocalized($model, 'field')
+- Detect current locale from session/cookie
+- Auto-switch language of UI
+- Show fallback language only if main locale data is empty
+- In PDF and frontend, hide element entirely if both languages are empty
+
+Phase 7: Auth and Access Control
+
+- Restrict CRUD routes to logged-in users only
+- Portfolio page will be public
+- Ensure that only owners can edit their own data
+- Optional admin panel can be added later
+
+Phase 8: Finalization
+
+- Clean up code
+- Ensure all controllers are using services only
+- Ensure all validation is done via Form Requests
+- Add localization strings for UI
+- Write user documentation
+- Prepare for deployment
+- Testing is a must(for critical features. After a module is complete, start testing it)
+
+Technologies
+
+- Bootstrap 5.3 Only
+- Laravel 12 is required
+- PHP 8.4 is required
+- JS and JQuery if its needed
+- All datatables server side processing
+- Datatable export to excel and pdf
+- Dompdf for pdf generation
+- Browsershot for pdf generation
+- MVC Architecture
+- Eloquent ORM
+- Migrations
+- Factories
+- Seeds
+- Controllers
+- Requests
+- Services
+- Models
+- Views
+- Routes
+- Database
+- Localization
+- Authentication
+- Testing with PHPUnit
+- Livewire is BANNED in this project
+- TailwindCSS is BANNED in this project
