@@ -19,6 +19,8 @@ use Database\Seeders\HobbySeeder;
 use Database\Seeders\SocialLinkSeeder;
 use Database\Seeders\VolunteeringSeeder;
 use Database\Seeders\PublicationSeeder;
+use Database\Seeders\LaratrustSeeder;
+use Database\Seeders\UserRoleSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,6 +29,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Önce Laratrust rol ve izinlerini ekleyelim
+        $this->call(LaratrustSeeder::class);
+        
+        // Ardından özel kullanıcılar ve rolleri
+        $this->call(UserRoleSeeder::class);
+        
+        // Diğer tüm seeder'lar
         $this->call([
             UserSeeder::class,
             ProfileSeeder::class,
